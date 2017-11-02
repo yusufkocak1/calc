@@ -16,7 +16,7 @@ import javax.swing.JButton;
 public class calcframe extends JFrame {
 
 	private JPanel content;
-	protected JTextField procscreen;
+	protected static JTextField procscreen;
 
 	/**
 	 * Launch the application.
@@ -168,6 +168,8 @@ public class calcframe extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				procscreen.setText(procscreen.getText() + btneq.getText());
 
+				new process(procscreen.getText());
+				
 			}
 		});
 
@@ -226,7 +228,7 @@ public class calcframe extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				procscreen.setText(procscreen.getText() + btnvr.getText());
+				procscreen.setText(procscreen.getText() + '.');
 
 			}
 		});
