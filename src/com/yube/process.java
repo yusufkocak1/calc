@@ -3,6 +3,8 @@ package com.yube;
 import java.sql.Array;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 public class process implements calculator {
 	ArrayList<contact> list = new ArrayList<>();
 
@@ -14,13 +16,13 @@ public class process implements calculator {
 	@Override
 	public ArrayList<contact> splitter(String procText) {
 		// TODO Auto-generated method stub
-		String[] operator = new String[10];
+		String[] operator = new String[100];
 		list.clear();
 		String[] parts = procText.split("[-+*/=]");
 		String[] parts2 = procText.split("");
 		int i = 1;
 		operator[0] = "e";
-
+        if(parts.length==parts2.length){
 		for (String string : parts2) {
 			if (string.equals("/") || string.equals("*") || string.equals("-")
 					|| string.equals("+")) {
@@ -34,15 +36,21 @@ public class process implements calculator {
 					.charAt(0)));
 			i++;
 		}
-		System.out.println(parts[0] + "\n" + operator[0]);
+	//	System.out.println(parts[0] + "\n" + operator[0]);
 
 		return list;
+        }
+        else {
+        	JOptionPane.showMessageDialog(null, "yanlýþ format");
+        	list.add(new contact(0.0, 'n'));
+        	return list;
+        }
 	}
 
 	@Override
 	public double processor(ArrayList<contact> data) {
 		int size = data.size();
-
+//ifle daha iyi olur
 		for (int i = 0; i + 1 < size; i++)
 			switch (data.get(i + 1).getOperator()) {
 			case '/':
@@ -50,24 +58,20 @@ public class process implements calculator {
 						data.get(i).getNumber() / data.get(i + 1).getNumber());
 				data.remove(i + 1);
 				size--;
-              break;
-				
-	
-				
+				break;
 
-			}for (int i = 0; i + 1 < size; i++)
-				switch (data.get(i + 1).getOperator()) {
-				
-					
-				case '*':
-					data.get(i).setNumber(
-							data.get(i).getNumber() * data.get(i + 1).getNumber());
-					data.remove(i + 1);
-					size--; 
-	              break;
-					
+			}
+		for (int i = 0; i + 1 < size; i++)
+			switch (data.get(i + 1).getOperator()) {
 
-				}
+			case '*':
+				data.get(i).setNumber(
+						data.get(i).getNumber() * data.get(i + 1).getNumber());
+				data.remove(i + 1);
+				size--;
+				break;
+
+			}
 
 		for (int i = 0; i + 1 < size; i++)
 			switch (data.get(i + 1).getOperator()) {
@@ -86,11 +90,9 @@ public class process implements calculator {
 						data.get(i).getNumber() + data.get(i + 1).getNumber());
 				data.remove(i + 1);
 				size--;
-				
 
 			}
 
-		
 		return data.get(0).number;
 	}
 
